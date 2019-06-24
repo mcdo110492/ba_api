@@ -27,10 +27,12 @@ class ProjectRequest extends FormRequest
      */
     public function rules()
     {
-        if(request()->isMethod('put')){
+        if($this->isMethod('put')){
 
+            $id = $this->route('id');
+           
             return [
-                'code' => "required|unique:projects,code|max:50,$this->id",
+                'code' => "required|unique:projects,code,$id|max:50",
                 'project' => 'required|max:250'
             ];
         }
