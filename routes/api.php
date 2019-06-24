@@ -23,3 +23,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthenticationController@me');
 
 });
+
+Route::get('projects', 'ProjectsController@index');
+
+Route::post('projects', 'ProjectsController@store');
+
+Route::put('projects/{id}', 'ProjectsController@update');
