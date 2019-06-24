@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
 class AuthenticationController extends Controller
 {
     public function __contruct()
@@ -11,15 +13,21 @@ class AuthenticationController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['username', 'password']);
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $credentials = compact('username', 'password');
 
         if(!$token = auth()->attempt($credentials)){
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        $user = User::where(['username' => $username])->get()->first();
+
+        $userData = ['username' => $user->username, 'role' => $user->role, 'status' => $user->status, 'name' => $user->name,'id' => $user->id];
+
+        return $this->respondWithToken($token, $userData);
     }
 
     public function me()
@@ -39,8 +47,8 @@ class AuthenticationController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
-    public function respondWithToken($token)
+    public function respondWithToken($token, $user = null)
     {
-        return response()->json(['access_token' => $token, 'expires_in' => auth()->factory()->getTTL() * 480]); // TTL for 8 hours
+        return response()->json(['user' => $user,'access_token' => $token, 'expires_in' => auth()->factory()->getTTL() * 480]); // TTL for 8 hours
     }
 }
