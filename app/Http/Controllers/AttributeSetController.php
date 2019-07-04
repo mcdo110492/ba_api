@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Projects;
-use App\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\AttributeSetRequest;
 
-class ProjectsController extends Controller
+use App\AttributeSet;
+
+class AttributeSetController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $get = Projects::all();
+        $get = AttributeSet::all();
 
         return response()->json(['payload' => ['data' => $get]]);
     }
@@ -28,9 +29,9 @@ class ProjectsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProjectRequest $request)
+    public function store(AttributeSetRequest $request)
     {
-        $store = Projects::create($request->all());
+        $store = AttributeSet::create($request->all());
 
         return response()->json(['payload' => ['message' => 'Created', 'data' => $store]], 201);
     }
@@ -41,19 +42,17 @@ class ProjectsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Projects  $projects
+     * @param  \App\AttributeSet  $attributeSet
      * @return \Illuminate\Http\Response
      */
-    public function update(ProjectRequest $request, $id)
+    public function update(AttributeSetRequest $request, $id)
     {
-        $project = Projects::findOrFail($id);
+        $set = AttributeSet::findOrFail($id);
 
-        $project->update($request->all());
+        $set->update($request->all());
 
-        $get = Projects::find($id);
+        $get = AttributeSet::find($id);
 
         return response()->json(['payload' => ['message' => 'Updated', 'data' => $get]]);
     }
-
- 
 }
