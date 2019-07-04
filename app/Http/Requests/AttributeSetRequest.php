@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AttributeSetRequest extends FormRequest
 {
@@ -27,10 +28,13 @@ class AttributeSetRequest extends FormRequest
      */
     public function rules()
     {
-    
+        $project_id = $this->input('project_id');
+        $code = $this->input('code');
         
         return [
-            'code' => "required|max:50",
+            'code' => ["required", "max:50", Rule::unique('attribute_set')->where(function ($query) use ($project_id, $code){
+                return $query->where('project_id', $project_id)->where('code',$code);
+            })],
             'project_id' => 'required|integer'
         ];
     }

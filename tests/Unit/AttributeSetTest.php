@@ -29,6 +29,7 @@ class AttributeSetTest extends TestCase
         $response = $this->withHeaders(['Authorization' => "Bearer $token"])
         ->json('POST', '/api/attribute/set', $data);
 
+
         $response->assertStatus(201)
         ->assertJsonStructure(['payload' => ['message','data']]);
        
@@ -69,5 +70,35 @@ class AttributeSetTest extends TestCase
         ->assertJsonStructure(['payload' => ['data']])
         ->assertJsonCount(3, 'payload.data');
        
+    }
+
+    public function test_uniqueValidatorAttributeSetperProject()
+    {
+        $user = \factory(\App\User::class)->create([
+            'username' => 'testadmin',
+            'password' => bcrypt('testadmin'),
+            'role' => 'admin'
+        ]);
+
+        $token = auth()->login($user);
+
+        $project_id = \factory(\App\Projects::class)->create()->id;
+
+        $create = \factory(\App\AttributeSet::class)->create([
+            'code' => 'code2',
+            'project_id' => $project_id
+        ]);
+
+        $data = \factory(\App\AttributeSet::class)->make([
+            'code' => 'code2',
+            'project_id' => $project_id
+        ])->toArray();
+
+        $response = $this->withHeaders(['Authorization' => "Bearer $token"])
+        ->json('POST', '/api/attribute/set', $data);
+
+
+        $response->assertStatus(422);
+
     }
 }
