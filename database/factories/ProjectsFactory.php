@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(\App\Projects::class, function (Faker $faker) {
     return [
         'code' => str_random(),
-        'project' => $faker->company
+        'project' => $faker->company,
+        'order' => 1
     ];
 });

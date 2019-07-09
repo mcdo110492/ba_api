@@ -9,6 +9,6 @@ class Projects extends Model
     protected $table = 'projects';
 
     protected $fillable = [
-        'code', 'project'
+        'code', 'project', 'order'
     ];
 }

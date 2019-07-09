@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('code', 50);
             $table->string('project', 255);
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }

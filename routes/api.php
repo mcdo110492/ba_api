@@ -43,3 +43,11 @@ Route::get('attribute/set', 'AttributeSetController@index');
 Route::post('attribute/set', 'AttributeSetController@store');
 
 Route::put('attribute/set/{id}', 'AttributeSetController@update');
+
+
+
+Route::get('attribute/set/attributes/{id}', 'AttributeSetAttributesController@index');
+
+Route::post('attribute/set/attributes', 'AttributeSetAttributesController@store');
+
+Route::put('attribute/set/attributes/{id}', 'AttributeSetAttributesController@update');

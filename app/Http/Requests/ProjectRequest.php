@@ -33,13 +33,15 @@ class ProjectRequest extends FormRequest
            
             return [
                 'code' => "required|unique:projects,code,$id|max:50",
-                'project' => 'required|max:250'
+                'project' => 'required|max:250',
+                'order' => 'required|integer'
             ];
         }
         
         return [
             'code' => 'required|unique:projects,code|max:50',
-            'project' => 'required|max:250'
+            'project' => 'required|max:250',
+            'order' => 'integer'
         ];
     }
 }

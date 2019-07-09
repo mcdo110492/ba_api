@@ -26,7 +26,8 @@ class ProjectsTest extends TestCase
 
         $data = [
             'code' => 'OR',
-            'project' => 'Outdoor Research'
+            'project' => 'Outdoor Research',
+            'order' => 1
         ];
 
         $response = $this->withHeaders(['Authorization' => "Bearer $token"])
@@ -51,7 +52,8 @@ class ProjectsTest extends TestCase
 
         $data = [
             'code' => 'OR',
-            'project' => 'Outdoor Research'
+            'project' => 'Outdoor Research',
+            'order' => 2
         ];
 
         $response = $this->withHeaders(['Authorization' => "Bearer $token"])
